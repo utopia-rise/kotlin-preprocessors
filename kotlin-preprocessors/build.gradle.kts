@@ -68,7 +68,6 @@ publishing {
             }
             artifactId = "kotlin-preprocessors"
             description = "Gradle plugin to define preprocessors for kotlin language"
-            from(components.getByName("java"))
         }
     }
 }
