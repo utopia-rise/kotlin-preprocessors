@@ -4,10 +4,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.SourceSetContainer
-import org.gradle.jvm.tasks.Jar
-import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.plugins.signing.SigningExtension
 
 class PublishToMavenCentralPlugin: Plugin<Project> {
@@ -30,15 +26,6 @@ class PublishToMavenCentralPlugin: Plugin<Project> {
                 target.extensions.findByType(PublishingExtension::class.java)?.publications?.all {
                     sign(this)
                 }
-            }
-
-            val stubJavaDocJar = target.tasks.register("stubJavaDocJar", Jar::class.java) {
-                archiveClassifier.set("javadoc")
-            }
-
-            val sourceJar = target.tasks.register("sourceJar", Jar::class.java) {
-                archiveClassifier.set("sources")
-                from(target.extensions.getByType<SourceSetContainer>()["main"].allSource)
             }
 
             target.extensions.configure(PublishingExtension::class.java) {
@@ -64,9 +51,6 @@ class PublishToMavenCentralPlugin: Plugin<Project> {
                             artifactId = target.name
                             version = target.version as String
 
-                            artifact(stubJavaDocJar.get())
-                            artifact(sourceJar.get())
-
                             pom {
                                 name.set("kotlin-preprocessors")
                                 description.set("Gradle plugin to define preprocessors for kotlin language")
@@ -76,7 +60,7 @@ class PublishToMavenCentralPlugin: Plugin<Project> {
                                 scm {
                                     connection.set("scm:git:https://github.com/utopia-rise/kotlin-preprocessors")
                                     developerConnection.set("scm:git:github.com:utopia-rise/kotlin-preprocessors.git")
-                                    tag.set("master") //FIXME
+                                    tag.set("main") //FIXME
                                     url.set("https://github.com/utopia-rise/kotlin-preprocessors")
                                 }
 

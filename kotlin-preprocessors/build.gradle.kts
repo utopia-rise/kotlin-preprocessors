@@ -62,6 +62,10 @@ tasks.test {
 publishing {
     publications {
         val kotlinPreProcessorPublication by creating(MavenPublication::class) {
+            pom {
+                name.set(project.name)
+                description.set("Gradle plugin to define kotlin pre-processors.")
+            }
             artifactId = "kotlin-preprocessors"
             description = "Gradle plugin to define preprocessors for kotlin language"
             from(components.getByName("java"))
