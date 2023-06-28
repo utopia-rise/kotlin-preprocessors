@@ -44,6 +44,7 @@ gradlePlugin {
             description = "Automatically setup of godot kotlin jvm specific project configurations"
 
             tags.set(listOf("kotlin", "pre-processors"))
+            vcsUrl.set("https://github.com/utopia-rise/kotlin-preprocessors")
         }
     }
 }
