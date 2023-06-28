@@ -7,6 +7,7 @@ plugins {
     `kotlin-dsl`
     id("org.ajoberstar.grgit") version "4.1.0"
     id("com.utopia-rise.maven-central-publish")
+    id("com.gradle.plugin-publish") version "1.1.0"
     `maven-publish`
 }
 
