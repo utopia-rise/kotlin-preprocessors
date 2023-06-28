@@ -44,46 +44,6 @@ class PublishToMavenCentralPlugin: Plugin<Project> {
                         }
                     }
                 }
-                publications {
-                    all {
-                        if (this is MavenPublication) {
-                            groupId = "com.utopia-rise"
-                            artifactId = target.name
-                            version = target.version as String
-
-                            pom {
-                                name.set("kotlin-preprocessors")
-                                description.set("Gradle plugin to define preprocessors for kotlin language")
-
-                                url.set("https://github.com/utopia-rise/kotlin-preprocessors.git")
-
-                                scm {
-                                    connection.set("scm:git:https://github.com/utopia-rise/kotlin-preprocessors")
-                                    developerConnection.set("scm:git:github.com:utopia-rise/kotlin-preprocessors.git")
-                                    tag.set("main") //FIXME
-                                    url.set("https://github.com/utopia-rise/kotlin-preprocessors")
-                                }
-
-                                licenses {
-                                    license {
-                                        name.set("MIT License")
-                                        url.set("https://github.com/utopia-rise/kotlin-preprocessors/blob/master/LICENSE")
-                                        distribution.set("repo")
-                                    }
-                                }
-
-                                developers {
-                                    developer {
-                                        id.set("core")
-                                        name.set("Pierre-Thomas Meisels")
-                                        url.set("https://github.com/piiertho")
-                                        email.set("meisels27@yahoo.fr")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
     }

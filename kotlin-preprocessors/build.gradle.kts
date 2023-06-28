@@ -3,12 +3,11 @@ import org.ajoberstar.grgit.Grgit
 
 plugins {
     kotlin("jvm")
-    `java-gradle-plugin`
     `kotlin-dsl`
     id("org.ajoberstar.grgit") version "4.1.0"
     id("com.utopia-rise.maven-central-publish")
     id("com.gradle.plugin-publish") version "1.1.0"
-    `maven-publish`
+    `java-gradle-plugin`
 }
 
 val baseVersion = "0.1.0"
@@ -36,12 +35,15 @@ repositories {
 }
 
 gradlePlugin {
+    website.set("https://github.com/utopia-rise/kotlin-preprocessors")
     plugins {
         create("preProcessorPlugin") {
             id = "com.utopia-rise.kotlin-preprocessors"
             implementationClass = "com.utopiarise.kotlin.preprocessors.gradle.PreProcessorPlugin"
             displayName = "Gradle plugin to define kotlin pre-processors"
             description = "Automatically setup of godot kotlin jvm specific project configurations"
+
+            tags.set(listOf("kotlin", "pre-processors"))
         }
     }
 }
