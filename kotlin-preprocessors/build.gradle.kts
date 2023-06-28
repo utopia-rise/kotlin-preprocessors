@@ -40,6 +40,8 @@ gradlePlugin {
         create("preProcessorPlugin") {
             id = "com.utopia-rise.kotlin-preprocessors"
             implementationClass = "com.utopiarise.kotlin.preprocessors.gradle.PreProcessorPlugin"
+            displayName = "Gradle plugin to define kotlin pre-processors"
+            description = "Automatically setup of godot kotlin jvm specific project configurations"
         }
     }
 }
