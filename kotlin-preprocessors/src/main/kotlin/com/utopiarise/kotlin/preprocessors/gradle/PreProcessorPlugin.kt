@@ -62,7 +62,7 @@ class PreProcessorPlugin : Plugin<Project> {
 
         project.pluginManager.apply("org.jetbrains.gradle.plugin.idea-ext")
 
-        project.ideaExtension.project.settings {
+        project.rootProject.ideaExtension.project.settings {
             taskTriggers {
                 afterSync(generationTask)
             }

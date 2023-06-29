@@ -6,11 +6,11 @@ plugins {
     `kotlin-dsl`
     id("org.ajoberstar.grgit") version "4.1.0"
     id("com.utopia-rise.maven-central-publish")
-    id("com.gradle.plugin-publish") version "1.1.0"
+    id("com.gradle.plugin-publish") version "1.2.0"
     `java-gradle-plugin`
 }
 
-val baseVersion = "0.1.0"
+val baseVersion = "0.1.1"
 
 val grgit = Grgit.open(mapOf("currentDir" to project.rootDir))
 
@@ -56,6 +56,10 @@ dependencies {
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.7")
 
     testImplementation(kotlin("test"))
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 tasks.test {
