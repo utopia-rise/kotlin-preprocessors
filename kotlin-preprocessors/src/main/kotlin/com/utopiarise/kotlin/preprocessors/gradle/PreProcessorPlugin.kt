@@ -60,7 +60,7 @@ class PreProcessorPlugin : Plugin<Project> {
             description = "Generate definitions for kotlin as constants."
         }
 
-        project.pluginManager.apply("org.jetbrains.gradle.plugin.idea-ext")
+        project.rootProject.pluginManager.apply("org.jetbrains.gradle.plugin.idea-ext")
 
         project.rootProject.ideaExtension.project.settings {
             taskTriggers {

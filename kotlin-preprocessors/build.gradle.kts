@@ -10,7 +10,7 @@ plugins {
     `java-gradle-plugin`
 }
 
-val baseVersion = "0.1.1"
+val baseVersion = "0.1.2"
 
 val grgit = Grgit.open(mapOf("currentDir" to project.rootDir))
 
