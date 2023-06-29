@@ -9,7 +9,7 @@ import org.gradle.plugins.signing.SigningExtension
 class PublishToMavenCentralPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         target.plugins.apply("maven-publish")
-//        target.plugins.apply("signing")
+        target.plugins.apply("signing")
         target.plugins.apply("org.ajoberstar.grgit")
 
         target.afterEvaluate {
@@ -20,13 +20,13 @@ class PublishToMavenCentralPlugin: Plugin<Project> {
 
             val releaseMode = !(target.version as String).endsWith("-SNAPSHOT")
 
-//            target.extensions.configure(SigningExtension::class.java) {
-//                @Suppress("UnstableApiUsage")
-//                useInMemoryPgpKeys(signingKey, signingPassword)
-//                target.extensions.findByType(PublishingExtension::class.java)?.publications?.all {
-//                    sign(this)
-//                }
-//            }
+            target.extensions.configure(SigningExtension::class.java) {
+                @Suppress("UnstableApiUsage")
+                useInMemoryPgpKeys(signingKey, signingPassword)
+                target.extensions.findByType(PublishingExtension::class.java)?.publications?.all {
+                    sign(this)
+                }
+            }
 
             target.extensions.configure(PublishingExtension::class.java) {
                 repositories {
