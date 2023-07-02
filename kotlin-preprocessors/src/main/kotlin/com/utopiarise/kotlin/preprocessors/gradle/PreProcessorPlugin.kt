@@ -7,7 +7,10 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.gradle.plugins.ide.idea.model.IdeaModule
+import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.gradle.ext.settings
 import org.jetbrains.gradle.ext.taskTriggers
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
@@ -51,6 +54,14 @@ open class GenerateDefinitions : DefaultTask() {
 
 class PreProcessorPlugin : Plugin<Project> {
     override fun apply(project: Project) {
+        project.rootProject.pluginManager.apply(IdeaPlugin::class.java)
+        project.rootProject.pluginManager.apply(IdeaExtPlugin::class.java)
+
+        if (project != project.rootProject) {
+            project.pluginManager.apply(IdeaPlugin::class.java)
+            project.pluginManager.apply(IdeaExtPlugin::class.java)
+        }
+
         val extension = project.extensions.create("kotlinDefinitions", PreProcessorPluginExtension::class.java)
         val generationTask = project.tasks.register("generateKotlinDefinitions", GenerateDefinitions::class.java) {
             definitions.set(extension.definitions)
@@ -60,7 +71,16 @@ class PreProcessorPlugin : Plugin<Project> {
             description = "Generate definitions for kotlin as constants."
         }
 
-        project.rootProject.pluginManager.apply("org.jetbrains.gradle.plugin.idea-ext")
+        val generatedKotlinDefinitionsDirectory = project.buildDir.resolve("definitions")
+
+        project
+            .kotlinExtension
+            .sourceSets
+            .getByName("main")
+            .kotlin
+            .srcDirs(generatedKotlinDefinitionsDirectory)
+
+        project.getTasksByName("compileKotlin", false).first().dependsOn(generationTask)
 
         project.rootProject.ideaExtension.project.settings {
             taskTriggers {
@@ -68,13 +88,11 @@ class PreProcessorPlugin : Plugin<Project> {
             }
         }
 
-        project
-            .kotlinExtension
-            .sourceSets
-            .getByName("main")
-            .kotlin
-            .srcDirs(project.buildDir.resolve("definitions"))
-        project.getTasksByName("compileKotlin", false).first().dependsOn(generationTask)
+        project.ideaExtension.apply {
+            module {
+                generatedSourceDirs.add(generatedKotlinDefinitionsDirectory)
+            }
+        }
     }
 }
 

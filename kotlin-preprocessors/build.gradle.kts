@@ -10,7 +10,7 @@ plugins {
     `java-gradle-plugin`
 }
 
-val baseVersion = "0.1.3"
+val baseVersion = "0.1.4"
 
 val grgit = Grgit.open(mapOf("currentDir" to project.rootDir))
 
@@ -51,6 +51,8 @@ gradlePlugin {
 
 dependencies {
     implementation(kotlin("gradle-plugin", version = "1.8.20"))
+    implementation(kotlin("gradle-plugin-api"))
+
     implementation("com.squareup:kotlinpoet:1.12.0")
 
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.7")
