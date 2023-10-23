@@ -3,14 +3,12 @@ package com.utopiarise.kotlin.preprocessors.codegen
 import com.squareup.kotlinpoet.*
 import java.io.File
 
-fun File.generateDefinitions(definitions: Map<String, Any>, definitionsObjectPrefix: String) {
-    val definitionsContainerName = "${definitionsObjectPrefix}Definitions"
-
+fun File.generateDefinitions(definitions: Map<String, Any>, definitionsObjectName: String) {
     val definitionsFile = FileSpec
-        .builder(definitionsPackage, definitionsContainerName)
+        .builder(definitionsPackage, definitionsObjectName)
 
     val definitionsObject = TypeSpec
-        .objectBuilder(definitionsContainerName)
+        .objectBuilder(definitionsObjectName)
 
     for (definition in definitions) {
         val definitionValue = definition.value

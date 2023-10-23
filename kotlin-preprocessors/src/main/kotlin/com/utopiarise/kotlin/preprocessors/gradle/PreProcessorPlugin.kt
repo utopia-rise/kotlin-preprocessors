@@ -9,15 +9,16 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaModel
-import org.gradle.plugins.ide.idea.model.IdeaModule
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.gradle.ext.settings
 import org.jetbrains.gradle.ext.taskTriggers
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
+private const val DEFAULT_DEFINITION_CLASS = "BuildConfig"
+
 open class PreProcessorPluginExtension(objects: ObjectFactory) {
     internal val definitions = mutableMapOf<String, Any>()
-    val definitionsObjectPrefix = objects.property(String::class.java)
+    val definitionsObjectName = objects.property(String::class.java)
 
     fun define(definition: String) {
         definitions[definition] = true
@@ -41,14 +42,14 @@ open class GenerateDefinitions : DefaultTask() {
     val definitions = project.objects.mapProperty(String::class.java, Any::class.java)
 
     @Input
-    val definitionsObjectPrefix = project.objects.property(String::class.java)
+    val definitionsObjectName = project.objects.property(String::class.java)
 
     @TaskAction
     fun execute() {
         val output = project.buildDir.resolve("definitions")
         output.deleteRecursively()
 
-        output.generateDefinitions(definitions.get(), definitionsObjectPrefix.get())
+        output.generateDefinitions(definitions.get(), definitionsObjectName.getOrElse(DEFAULT_DEFINITION_CLASS))
     }
 }
 
@@ -65,7 +66,7 @@ class PreProcessorPlugin : Plugin<Project> {
         val extension = project.extensions.create("kotlinDefinitions", PreProcessorPluginExtension::class.java)
         val generationTask = project.tasks.register("generateKotlinDefinitions", GenerateDefinitions::class.java) {
             definitions.set(extension.definitions)
-            definitionsObjectPrefix.set(extension.definitionsObjectPrefix)
+            definitionsObjectName.set(extension.definitionsObjectName)
 
             group = "kotlin-definitions"
             description = "Generate definitions for kotlin as constants."

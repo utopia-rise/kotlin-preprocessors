@@ -8,7 +8,7 @@ group = "com.utopia-rise"
 version = "0.1.0-SNAPSHOT"
 
 kotlinDefinitions {
-    definitionsObjectPrefix.set("Samples")
+    definitionsObjectName.set("SamplesBuildConfig")
 
     define("DEBUG")
 }
