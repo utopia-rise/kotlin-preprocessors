@@ -4,7 +4,7 @@ import org.ajoberstar.grgit.Grgit
 plugins {
     kotlin("jvm")
     `kotlin-dsl`
-    id("org.ajoberstar.grgit") version "4.1.0"
+    id("org.ajoberstar.grgit") version "5.3.2"
     id("com.utopia-rise.maven-central-publish")
     id("com.gradle.plugin-publish") version "1.2.0"
     `java-gradle-plugin`
@@ -50,7 +50,7 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin", version = "1.8.20"))
+    implementation(kotlin("gradle-plugin", version = "2.2.0"))
     implementation(kotlin("gradle-plugin-api"))
 
     implementation("com.squareup:kotlinpoet:1.12.0")

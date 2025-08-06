@@ -1,7 +1,7 @@
-import kotlincompile.definitions.SamplesDefinitions
+import kotlincompile.definitions.SamplesBuildConfig
 
 fun main(args: Array<String>) {
-    if (SamplesDefinitions.DEBUG) {
+    if (SamplesBuildConfig.DEBUG) {
         println("DEBUG!")
     } else {
         println("not DEBUG!")
@@ -9,5 +9,5 @@ fun main(args: Array<String>) {
 }
 
 fun isDebug(): Boolean {
-    return SamplesDefinitions.DEBUG
+    return SamplesBuildConfig.DEBUG
 }

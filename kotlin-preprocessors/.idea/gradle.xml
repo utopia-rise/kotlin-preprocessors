@@ -32,6 +32,11 @@
                   <project path="$PROJECT_DIR$" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
