@@ -30,5 +30,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin", version = "1.8.20"))
+    implementation(kotlin("gradle-plugin", version = "2.0.21"))
+    implementation("com.vanniktech:gradle-maven-publish-plugin:0.34.0")
 }
