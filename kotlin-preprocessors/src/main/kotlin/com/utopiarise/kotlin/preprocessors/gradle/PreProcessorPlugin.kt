@@ -44,9 +44,12 @@ open class GenerateDefinitions : DefaultTask() {
     @Input
     val definitionsObjectName = project.objects.property(String::class.java)
 
+    private val buildDirProvider = project.layout.buildDirectory.asFile
+
     @TaskAction
     fun execute() {
-        val output = project.buildDir.resolve("definitions")
+        val buildDir = buildDirProvider.get()
+        val output = buildDir.resolve("definitions")
         output.deleteRecursively()
 
         output.generateDefinitions(definitions.get(), definitionsObjectName.getOrElse(DEFAULT_DEFINITION_CLASS))
