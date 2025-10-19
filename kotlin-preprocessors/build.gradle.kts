@@ -1,10 +1,9 @@
-import org.ajoberstar.grgit.Commit
-import org.ajoberstar.grgit.Grgit
+import versioning.GitTagValueSource
+import versioning.GitHashValueSource
 
 plugins {
     kotlin("jvm")
     `kotlin-dsl`
-    id("org.ajoberstar.grgit") version "5.3.2"
     id("com.utopia-rise.maven-central-publish")
     id("com.gradle.plugin-publish") version "1.2.0"
     `java-gradle-plugin`
@@ -12,17 +11,21 @@ plugins {
 
 val baseVersion = "0.2.1"
 
-val grgit = Grgit.open(mapOf("currentDir" to project.rootDir))
+val exactTag = providers.of(GitTagValueSource::class) {
+    parameters.workDir.set(layout.projectDirectory)
+}
 
-val currentCommit: Commit = grgit.head()
-// check if the current commit is tagged
-var tagOnCurrentCommit = grgit.tag.list().firstOrNull { tag -> tag.commit.id == currentCommit.id }
-var releaseMode = tagOnCurrentCommit != null
+val shortHash = providers.of(GitHashValueSource::class) {
+    parameters.workDir.set(layout.projectDirectory)
+    parameters.abbrev.set(7)
+}
 
-version = if (!releaseMode) {
-    "$baseVersion-${currentCommit.abbreviatedId}-SNAPSHOT"
-} else {
-    requireNotNull(tagOnCurrentCommit).name
+logger.lifecycle("Current tag is: ${exactTag.orNull}")
+logger.lifecycle("Current commit hash is: ${shortHash.orNull}")
+
+val tagValue = exactTag.get()
+version = tagValue.ifBlank {
+    "$baseVersion-${shortHash.get()}-SNAPSHOT"
 }
 
 group = "com.utopia-rise"

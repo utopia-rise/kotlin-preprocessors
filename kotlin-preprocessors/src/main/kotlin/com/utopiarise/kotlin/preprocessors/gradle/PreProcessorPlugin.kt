@@ -75,7 +75,7 @@ class PreProcessorPlugin : Plugin<Project> {
             description = "Generate definitions for kotlin as constants."
         }
 
-        val generatedKotlinDefinitionsDirectory = project.buildDir.resolve("definitions")
+        val generatedKotlinDefinitionsDirectory = project.layout.buildDirectory.asFile.get().resolve("definitions")
 
         project
             .kotlinExtension
